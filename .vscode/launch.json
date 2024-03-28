@@ -9,7 +9,7 @@
       "name": "gg_json.dart",
       "type": "dart",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/gg_json.dart",
+      "program": "${workspaceFolder}/example/gg_json_example.dart",
       "args": ["--param", "value"],
       "console": "debugConsole"
     },
