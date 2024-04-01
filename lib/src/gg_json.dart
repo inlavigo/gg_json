@@ -51,14 +51,14 @@ class GgJson {
   /// Writes a value into a JSON file.
   ///
   /// - If the path does not exist, it will be created.
-  /// - Throws when an existing value is not of type [T].
+  /// - Creates the file when not existing.
   /// - Returns the new JSON content.
   Future<String> writeFile<T>({
     required File file,
     required String path,
     required T value,
   }) async {
-    final json = file.readAsStringSync();
+    final json = (await file.exists()) ? await file.readAsString() : '';
     final result = writeString<T>(json: json, path: path, value: value);
     await file.writeAsString(result);
     return result;
@@ -139,7 +139,7 @@ class GgJson {
     required File file,
     required String path,
   }) async {
-    final json = file.readAsStringSync();
+    final json = await file.readAsString();
     final result = removeFromString(json: json, path: path);
     await file.writeAsString(result);
     return result;

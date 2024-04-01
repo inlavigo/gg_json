@@ -124,12 +124,11 @@ void main() {
         });
 
         group('throws', () {
-          test('- when the file is not existing', () {
+          test('- when the file is not existing', () async {
             final file = File('not_existing_file.json');
-            expect(
-              () => ggJson.writeFile(file: file, path: 'a/b', value: 1),
-              throwsA(isA<FileSystemException>()),
-            );
+            final result =
+                await ggJson.writeFile(file: file, path: 'a/b', value: 1);
+            expect(result, '{"a":{"b":1}}');
           });
         });
       });
@@ -232,9 +231,9 @@ void main() {
 
         group('throws', () {
           test('- when the file is not existing', () {
-            final file = File('not_existing_file.json');
+            final file = File('not_existing_file_2.json');
             expect(
-              () => ggJson.readFile<int>(file: file, path: 'a/b'),
+              () async => await ggJson.readFile<int>(file: file, path: 'a/b'),
               throwsA(isA<FileSystemException>()),
             );
           });
@@ -286,9 +285,9 @@ void main() {
 
         group('throws', () {
           test('- when the file is not existing', () {
-            final file = File('not_existing_file.json');
+            final file = File('not_existing_file_3.json');
             expect(
-              () => ggJson.removeFromFile(file: file, path: 'a/b'),
+              () async => await ggJson.removeFromFile(file: file, path: 'a/b'),
               throwsA(isA<FileSystemException>()),
             );
           });
