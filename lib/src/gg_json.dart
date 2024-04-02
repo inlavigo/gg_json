@@ -89,7 +89,10 @@ class GgJson {
     required File file,
     required String path,
   }) async {
-    final json = await file.readAsString();
+    var json = await file.readAsString();
+    if (json.isEmpty) {
+      json = '{}';
+    }
     return readString<T>(json: json, path: path);
   }
 

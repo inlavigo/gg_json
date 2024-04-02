@@ -227,6 +227,12 @@ void main() {
             final result = await ggJson.readFile<int>(file: file, path: 'a/c');
             expect(result, null);
           });
+
+          test('- with an empty file', () async {
+            await file.writeAsString('');
+            final result = await ggJson.readFile<int>(file: file, path: 'a/c');
+            expect(result, null);
+          });
         });
 
         group('throws', () {
