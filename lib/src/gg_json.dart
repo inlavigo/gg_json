@@ -10,7 +10,7 @@ import 'dart:io';
 /// Easily read and write values to and from JSON documents.
 class GgJson {
   /// Constructor.
-  const GgJson();
+  const GgJson({this.prettyPrint = false});
 
   // ######################
   // Write
@@ -43,7 +43,7 @@ class GgJson {
         json.isEmpty ? {} : jsonDecode(json) as Map<String, dynamic>;
 
     _write<T>(jsonMap, path.split('/'), value);
-    final result = jsonEncode(jsonMap);
+    final result = _encoder.convert(jsonMap);
     return result;
   }
 
@@ -133,7 +133,7 @@ class GgJson {
         jsonDecode(json) as Map<String, dynamic>;
 
     _remove(jsonMap, path.split('/'));
-    return jsonEncode(jsonMap);
+    return _encoder.convert(jsonMap);
   }
 
   // ...........................................................................
@@ -148,9 +148,15 @@ class GgJson {
     return result;
   }
 
+  // ...........................................................................
+  /// Is the JSON document pretty printed?
+  final bool prettyPrint;
+
   // ######################
   // Private
   // ######################
+  JsonEncoder get _encoder =>
+      prettyPrint ? const JsonEncoder.withIndent('  ') : const JsonEncoder();
 
   // ...........................................................................
   T? _read<T>(Map<String, dynamic> json, Iterable<String> path) {

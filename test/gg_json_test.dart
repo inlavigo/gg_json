@@ -85,6 +85,15 @@ void main() {
                 ggJson.writeString(json: json, path: 'a/c', value: 2);
             expect(result, '{"a":{"b":1,"c":2}}');
           });
+
+          test('- with prettyPrint', () {
+            const json = '{"a":{"b":1}}';
+            const ggJson = GgJson(prettyPrint: true);
+            final result =
+                ggJson.writeString(json: json, path: 'a/c', value: 2);
+
+            expect(result, prettyPrintResult);
+          });
         });
 
         group('throws', () {
@@ -302,3 +311,11 @@ void main() {
     });
   });
 }
+
+const prettyPrintResult = '''
+{
+  "a": {
+    "b": 1,
+    "c": 2
+  }
+}''';
