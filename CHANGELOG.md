@@ -1,10 +1,11 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.6] - 2024-04-13
 
 ### Removed
 
 - dependency to gg\_install\_gg, remove ./check script
+- dependency pana
 
 ## [1.0.5] - 2024-04-11
 
@@ -28,7 +29,7 @@
 - Fix: Reading from empty file does not throw anymore
 - Prepare publish
 
-[Unreleased]: https://github.com/inlavigo/gg_json/compare/1.0.5...HEAD
+[1.0.6]: https://github.com/inlavigo/gg_json/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/inlavigo/gg_json/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/inlavigo/gg_json/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/inlavigo/gg_json/tag/%tag
