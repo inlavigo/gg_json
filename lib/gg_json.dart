@@ -6,4 +6,6 @@
 
 library;
 
+export 'src/gg_json_item.dart';
+export 'src/gg_json_layer.dart';
 export 'src/gg_json.dart';
