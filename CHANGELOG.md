@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [2.0.0] - 2024-11-27
 
 ### Changed
 
@@ -35,7 +35,7 @@
 - Fix: Reading from empty file does not throw anymore
 - Prepare publish
 
-[Unreleased]: https://github.com/inlavigo/gg_json/compare/1.0.6...HEAD
+[2.0.0]: https://github.com/inlavigo/gg_json/compare/1.0.6...2.0.0
 [1.0.6]: https://github.com/inlavigo/gg_json/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/inlavigo/gg_json/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/inlavigo/gg_json/compare/1.0.3...1.0.4
