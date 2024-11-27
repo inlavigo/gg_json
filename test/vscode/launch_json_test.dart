@@ -24,20 +24,20 @@ void main() {
       final configurations =
           parsedLaunchJson['configurations'] as List<dynamic>;
 
-      final ggJson = configurations.firstWhere(
+      final directJson = configurations.firstWhere(
         (dynamic configuration) =>
             configuration['name'].toString() == 'gg_json.dart',
       );
 
       expect(
-        ggJson,
+        directJson,
         isNotNull,
         reason: 'Item for executing bin/gg_json.dart not found',
       );
 
-      expect(ggJson['name'], 'gg_json.dart');
-      expect(ggJson['type'], 'dart');
-      expect(ggJson['request'], 'launch');
+      expect(directJson['name'], 'gg_json.dart');
+      expect(directJson['type'], 'dart');
+      expect(directJson['request'], 'launch');
 
       // Ensure there is a coniguration for executing the current file
       final currentFile = parsedLaunchJson['configurations'].firstWhere(

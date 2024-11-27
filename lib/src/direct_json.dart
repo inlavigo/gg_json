@@ -7,10 +7,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-/// Easily read and write values to and from JSON documents.
-class GgJson {
+/// Easily read and write values directly to and from JSON documents.
+class DirectJson {
   /// Constructor.
-  const GgJson({this.prettyPrint = false});
+  const DirectJson({this.prettyPrint = false});
 
   // ######################
   // Write

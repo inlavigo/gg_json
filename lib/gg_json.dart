@@ -6,4 +6,4 @@
 
 library;
 
-export 'src/gg_json.dart';
+export 'src/direct_json.dart';
