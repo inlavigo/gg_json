@@ -11,7 +11,7 @@ void main() {
   group('GgJson', () {
     group('example', () {
       test('returns a fine example', () {
-        final ggJson = GgJson.example();
+        final ggJson = GgJsonOld.example();
         expect(ggJson.data, {
           '@layerA': {
             '3c6tvJzmSXR9CCFF2HpkXf': {
@@ -39,7 +39,7 @@ void main() {
             final json = <String, dynamic>{};
             late String message;
             try {
-              GgJson(layers: json, validateHashes: true);
+              GgJsonOld(layers: json, validateHashes: true);
             } catch (e) {
               message = e.toString();
             }
@@ -50,7 +50,7 @@ void main() {
         group('false', () {
           test('should not throw when hashes are not correct', () {
             final json = <String, dynamic>{};
-            final ggJson = GgJson(layers: json, validateHashes: false);
+            final ggJson = GgJsonOld(layers: json, validateHashes: false);
 
             expect(ggJson, isNotNull);
           });
@@ -61,7 +61,7 @@ void main() {
     group('addLayers(jsonData)', () {
       group('throws', () {
         test('when the layer already exists', () {
-          final ggJson = GgJson.example();
+          final ggJson = GgJsonOld.example();
           late String message;
 
           try {
@@ -76,7 +76,7 @@ void main() {
         });
 
         test('when a layer name does not start with @', () {
-          final ggJson = GgJson.example();
+          final ggJson = GgJsonOld.example();
           late String message;
 
           try {
@@ -96,9 +96,9 @@ void main() {
 
       group('adds the layers', () {
         test('and updates the hashes', () {
-          final ggJson = GgJson.example();
+          final ggJson = GgJsonOld.example();
           ggJson.addLayers({
-            '@layerC': {'keyC': 'valueC'},
+            '@layerC': {'kCVY4Fo01Mnda9/VSyIAT9': <String, dynamic>{}},
           });
 
           expect(ggJson.data['@layerA'], isNotNull);
@@ -114,7 +114,7 @@ void main() {
               '_hash': 'P4p3GYqqSOS2uSdp3z1/6W',
             },
             '@layerB': {
-              'hashB': {
+              'c9Pss1Pdj9txvVN5Ggy42a': {
                 'keyB': 'valueB',
                 '@layerA': 'hashA',
                 '_hash': 'c9Pss1Pdj9txvVN5Ggy42a',
@@ -122,7 +122,10 @@ void main() {
               '_hash': 'x9mnRn7AQWHzFhairVsqmo',
             },
             '_hash': '8lSWUn/eIXSenjTV2T5vLV',
-            '@layerC': {'keyC': 'valueC', '_hash': 'uzBHrzkjg4aZsER4tYoQnU'},
+            'Y2d8pdVXxhANIIx/1J2R5': {
+              'keyC': 'valueC',
+              '_hash': 'Y2d8pdVXxhANIIx/1J2R5',
+            },
           });
         });
       });
