@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Add GgJson - a fancy relational json implementation
+
 ## [2.0.1] - 2024-11-27
 
 ### Changed
@@ -38,6 +44,7 @@
 - Fix: Reading from empty file does not throw anymore
 - Prepare publish
 
+[Unreleased]: https://github.com/inlavigo/gg_json/compare/2.0.1...HEAD
 [2.0.1]: https://github.com/inlavigo/gg_json/compare/1.0.6...2.0.1
 [1.0.6]: https://github.com/inlavigo/gg_json/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/inlavigo/gg_json/compare/1.0.4...1.0.5

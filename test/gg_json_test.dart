@@ -141,6 +141,25 @@ void main() {
         ]);
       });
 
+      test('replaces data when the added layer is not yet existing', () {
+        final ggJson2 = ggJson.addData({
+          '@layerC': {
+            '_data': [
+              {'keyC0': 'c0'},
+            ],
+          },
+        });
+
+        final items = ggJson2.ls();
+        expect(items, [
+          '@layerA/KFQrf4mEz0UPmUaFHwH4T6/keyA0',
+          '@layerA/YPw-pxhqaUOWRFGramr4B1/keyA1',
+          '@layerB/nmejjLAUhygiT6WFDPPsHy/keyB0',
+          '@layerB/dXhIygNwNMVPEqFbsFJkn6/keyB1',
+          '@layerC/afNjjrfH8-OfkkEH1uCK14/keyC0',
+        ]);
+      });
+
       test('does not cause duplicates', () {
         final ggJson2 = ggJson.addData({
           '@layerA': {
@@ -195,7 +214,71 @@ void main() {
     });
 
     group('checkLinks()', () {
-      test('throws when a link is broken', () {});
+      test('does nothing when all links are ok', () {
+        final ggJson = GgJson.exampleWithLink;
+        ggJson.checkLinks();
+      });
+
+      group('throws', () {
+        test('when the layer of a link does not exist', () {
+          final ggJson = GgJson.exampleWithLink;
+
+          // Add an item with an link to a non-existing layer
+          final jsonWithBrokenLink = ggJson.addData({
+            '@layerA': {
+              '_data': [
+                {
+                  '@nonExistingLayer': 'a2',
+                },
+              ],
+            },
+          });
+
+          late final String message;
+
+          try {
+            jsonWithBrokenLink.checkLinks();
+          } catch (e) {
+            message = e.toString();
+          }
+
+          expect(
+            message,
+            'Exception: Layer "@layerA" has an item "isQfTSg24p0hXHxkBB_wEa" '
+            'which links to not existing layer "@nonExistingLayer".',
+          );
+        });
+
+        test('when linked item does not exist', () {
+          final ggJson = GgJson.exampleWithLink;
+
+          // Add an item with an link to a non-existing layer
+          final jsonWithBrokenLink = ggJson.addData({
+            '@linkToLayerA': {
+              '_data': [
+                {
+                  '@layerA': 'brokenHash',
+                },
+              ],
+            },
+          });
+
+          late final String message;
+
+          try {
+            jsonWithBrokenLink.checkLinks();
+          } catch (e) {
+            message = e.toString();
+          }
+
+          expect(
+            message,
+            'Exception: Layer "@linkToLayerA" has an item '
+            '"NnQGoODqzFIwANtgDUMkhA" which links to not existing '
+            'item "brokenHash" in layer "@layerA".',
+          );
+        });
+      });
     });
   });
 }

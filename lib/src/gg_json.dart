@@ -31,6 +31,12 @@ class GgJson {
     _checkLayerNames(data);
     data = addHashes(data);
 
+    if (this.data.isEmpty) {
+      return GgJson._private(data: data);
+    }
+
+    final mergedData = {...this.data};
+
     if (this.data.isNotEmpty) {
       for (final layer in data.keys) {
         if (layer == '_hash') {
@@ -42,28 +48,28 @@ class GgJson {
         final newLayer = data[layer];
 
         if (oldLayer == null) {
-          this.data[layer] = newLayer;
+          mergedData[layer] = newLayer;
           continue;
         }
 
         // Layer exists. Merge data
-        final mergedData = [...oldLayer['_data'] as List<dynamic>];
+        final mergedLayer = [...oldLayer['_data'] as List<dynamic>];
         final newData = newLayer['_data'] as List<dynamic>;
 
         for (final item in newData) {
           final hash = item['_hash'];
-          final exists = mergedData.any((element) => element['_hash'] == hash);
+          final exists = mergedLayer.any((element) => element['_hash'] == hash);
           if (!exists) {
-            mergedData.add(item);
+            mergedLayer.add(item);
           }
         }
 
-        newLayer['_data'] = mergedData;
-        data[layer] = newLayer;
+        newLayer['_data'] = mergedLayer;
+        mergedData[layer] = newLayer;
       }
     }
 
-    return GgJson._private(data: data);
+    return GgJson.fromData(mergedData);
   }
 
   // ...........................................................................
@@ -136,6 +142,48 @@ class GgJson {
   }
 
   // ...........................................................................
+  /// Throws if a link is not available
+  void checkLinks() {
+    for (final layer in data.keys) {
+      if (layer == '_hash') continue;
+
+      for (final item
+          in (data[layer]['_data'] as List<dynamic>).cast<GgMap>()) {
+        for (final key in item.keys) {
+          if (key == '_hash') continue;
+
+          if (key.startsWith('@')) {
+            // Check if linked layer exists
+            final linkLayer = data[key];
+            final hash = item['_hash'];
+
+            if (linkLayer == null) {
+              throw Exception(
+                'Layer "$layer" has an item "$hash" which links to not '
+                'existing layer "$key".',
+              );
+            }
+
+            // Check if linked item exists
+            final targetHash = item[key];
+            final linkedItem = linkLayer['_data'].firstWhere(
+              (dynamic v) => v['_hash'] == targetHash,
+              orElse: () => null,
+            );
+
+            if (linkedItem == null) {
+              throw Exception(
+                'Layer "$layer" has an item "$hash" which links to '
+                'not existing item "$targetHash" in layer "$key".',
+              );
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ...........................................................................
   /// An example object
   static final GgJson example = GgJson.fromData({
     '@layerA': {
@@ -166,19 +214,19 @@ class GgJson {
     '@layerA': {
       '_data': [
         {
+          '_hash': 'KFQrf4mEz0UPmUaFHwH4T6',
           'keyA0': 'a0',
         },
         {
+          '_hash': 'YPw-pxhqaUOWRFGramr4B1',
           'keyA1': 'a1',
         }
       ],
     },
-
-    // HIER WEITER
     '@linkToLayerA': {
       '_data': [
         {
-          '@layerA': '3489034',
+          '@layerA': 'KFQrf4mEz0UPmUaFHwH4T6',
         },
       ],
     },
@@ -193,6 +241,8 @@ class GgJson {
 
   void _checkLayerNames(GgMap data) {
     for (final key in data.keys) {
+      if (key == '_hash') continue;
+
       if (key.startsWith('@')) {
         continue;
       }
@@ -206,6 +256,7 @@ class GgJson {
     final layersWithWrongType = <String>[];
 
     for (final layer in data.keys) {
+      if (layer == '_hash') continue;
       final layerData = data[layer];
       final items = layerData['_data'];
       if (items == null) {
