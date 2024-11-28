@@ -8,6 +8,8 @@ import 'dart:convert';
 import 'dart:io';
 
 /// Easily read and write values to and from JSON documents.
+@Deprecated('Please execute `dart pub add gg_direct_json` and replace '
+    '`GgJson` by `DirectJson`')
 class GgJson {
   /// Constructor.
   const GgJson({this.prettyPrint = false});

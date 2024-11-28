@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- BREAKING CHANGE: GgJson has been moved to gg\_direct\_json lib and needs to be replaced by DirectJson
+
 ## [1.0.6] - 2024-04-13
 
 ### Removed
@@ -29,6 +35,7 @@
 - Fix: Reading from empty file does not throw anymore
 - Prepare publish
 
+[Unreleased]: https://github.com/inlavigo/gg_json/compare/1.0.6...HEAD
 [1.0.6]: https://github.com/inlavigo/gg_json/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/inlavigo/gg_json/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/inlavigo/gg_json/compare/1.0.3...1.0.4

@@ -1,6 +1,6 @@
 name: gg_json
 description: gg_json allows easy JSON manipulation via a/b/c paths for read/write.
-version: 1.0.7
+version: 2.0.2
 repository: https://github.com/inlavigo/gg_json.git
 
 environment:
